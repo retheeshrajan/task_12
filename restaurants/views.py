@@ -49,13 +49,13 @@ def signout(request):
 def restaurant_list(request):
     restaurant = Restaurant.objects.all()
 
-    query = request.GET.get("q")
-    if query:
-        #restaurant = Restaurant.filter(title__contains=query)
+    if request.GET.get("q"):
+        query = request.GET.get("q")
+    #restaurant = Restaurant.filter(title__contains=query)
         restaurant = Restaurant.objects.filter(Q(name__contains=query)|Q(description__contains=query))
+
     context = {
         "restaurants":restaurant,
-        "src":query,
     }
     return render(request, 'list.html', context)
 
